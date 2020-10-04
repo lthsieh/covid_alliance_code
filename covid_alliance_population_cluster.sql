@@ -52,3 +52,6 @@ tab4 as (
   group by lat_bins, long_bins, interval_start, interval_end
   order by interval_start
 ) -- calculate pupulation-level density
+
+select *
+from tab4
