@@ -39,3 +39,16 @@ tab3 as (
         tab2.interval_end > tab1.CLUSTER_STARTED_UTC
   order by lat_bin, long_bin, latitude
 ), -- tab3: join tab1 & tab2 to expand on 15-min time intevals
+
+tab4 as (
+  select lat_bins,
+         long_bins,
+         interval_start,
+         interval_end,
+         avg(LATITUDE) as avg_lat,
+         avg(LONGITUDE) as avg_lon,
+         count(*) as density   -- number of people in the same lat-long-time bin
+  from tab3
+  group by lat_bins, long_bins, interval_start, interval_end
+  order by interval_start
+) -- calculate pupulation-level density
