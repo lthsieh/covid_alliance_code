@@ -1,3 +1,7 @@
+-- This query will generate population-level spatio-temporal density informaiton.
+-- Density is defined as #clusters per lat-long-time bin.
+-- Each lat-long-time bin == (1/60) lat degrees -- (1/60) long degrees -- 15min
+create or replace table "SCRATCH"."ANALYTICS_DEV_SCRATCH"."POPULATION_DENSITY_CLUSTER_FH" as (
 with tab1 as (
   select width_bucket(LATITUDE,
                      (select MIN(LATITUDE) from "ANALYTICS"."DEV"."AZ_CLUSTERS_7_15_to_7_22"),
@@ -55,3 +59,4 @@ tab4 as (
 
 select *
 from tab4
+)
