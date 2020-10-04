@@ -30,3 +30,12 @@ tab2 as (
    order by CLUSTER_STARTED_UTC)
    order by 1
 ),  -- tab2: generate 15-min time intervals
+
+tab3 as (
+  select *
+  from tab1
+  left join tab2
+  where tab2.interval_start < tab1.CLUSTER_ENDED_UTC AND
+        tab2.interval_end > tab1.CLUSTER_STARTED_UTC
+  order by lat_bin, long_bin, latitude
+), -- tab3: join tab1 & tab2 to expand on 15-min time intevals
