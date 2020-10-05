@@ -1,3 +1,4 @@
+create or replace table "SCRATCH"."ANALYTICS_DEV_SCRATCH"."PERSON-LEVEL_RISK_SCORE_FH" as (
 with tab1 as (
   select width_bucket(LATITUDE,
                      (select MIN(LATITUDE) from "ANALYTICS"."DEV"."AZ_CLUSTERS_7_15_to_7_22"),
@@ -63,3 +64,4 @@ on tab3.lat_bins = tab4.lat_bins and
    tab3.interval_start = tab4.interval_start
 group by advertiser_id, y_m_d
 order by advertiser_id, y_m_d
+)
