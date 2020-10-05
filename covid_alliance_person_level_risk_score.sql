@@ -52,3 +52,14 @@ tab4 as (
   group by lat_bins, long_bins, interval_start, interval_end
   order by interval_start
 ) -- tab4: calculate pupulation-level density
+
+select advertiser_id,
+       date_trunc('DAY', tab3.interval_start) as y_m_d,
+       avg(density) as risk_score
+from tab3
+left join tab4
+on tab3.lat_bins = tab4.lat_bins and
+   tab3.long_bins = tab4.long_bins and
+   tab3.interval_start = tab4.interval_start
+group by advertiser_id, y_m_d
+order by advertiser_id, y_m_d
