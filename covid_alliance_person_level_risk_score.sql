@@ -130,8 +130,17 @@ tab10 as (
   right join tab9 b
   on a.advertiser_id = b.advertiser_id and
      date_trunc('DAY', a.date) = b.Y_M_D
+),
+-- add total distaince travel to person-level risk table
+tab11 as (
+  select a.*,
+         b.distance_traveled_km
+  from tab10 a
+  left join "ANALYTICS"."DEV"."USERS_DISTANCE_TRAVELED" b
+  on a.advertiser_id = b.advertiser_id and
+     a.Y_M_D = b.DATE
 )
 
 select *
-from tab10
+from tab11
 )
