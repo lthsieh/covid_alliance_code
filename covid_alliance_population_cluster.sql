@@ -1,6 +1,7 @@
 -- This query will generate population-level spatio-temporal density informaiton.
 -- Density is defined as #clusters per lat-long-time bin.
 -- Each lat-long-time bin == (1/60) lat degrees -- (1/60) long degrees -- 15min
+-- Author: Frank Hsieh 10/10/2020
 create or replace table "SCRATCH"."ANALYTICS_DEV_SCRATCH"."POPULATION_DENSITY_CLUSTER_EXCLUDE_HOME_FH" as (
 with
 -- generate lat_bins and long_bins
@@ -73,7 +74,7 @@ tab3 as (
         b.interval_end   > a.CLUSTER_STARTED_LOCAL
   order by lat_bins, long_bins, latitude
 ),
--- calculate pupulation-level density
+-- calculate pupulation-level density while excluding home clusters
 tab4 as (
   select lat_bins,
          long_bins,
